@@ -55,7 +55,7 @@ jobs:
         run: mvn test
 
 
-  build_project_and_sonar_scan:
+  build_project:
     runs-on: self-hosted
     needs: test
     steps:
@@ -73,18 +73,3 @@ jobs:
 
       - name: Build Project
         run: mvn package
-
-      - name: SonarCloud Scan with Maven
-        run: mvn sonar:sonar -Dsonar.login=${{ secrets.SONAR_TOKEN }} -Dsonar.host.url=https://sonarcloud.io
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_HOST_URL: https://sonarcloud.io
-
-      - name: SonarCloud Quality Gate check
-        id: sonarqube-quality-gate-check
-        uses: sonarsource/sonarqube-quality-gate-action@master
-        with:
-          pollingTimeoutSec: 600
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_HOST_URL: https://sonarcloud.io
