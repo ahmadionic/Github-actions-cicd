@@ -7,7 +7,7 @@ on:
 jobs:
 
   compile:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
 
     steps:
       - name: Checkout code
@@ -25,7 +25,7 @@ jobs:
 
 
   security-check:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     needs: compile   # 👈 pehle compile job run hogi
 
     steps:
