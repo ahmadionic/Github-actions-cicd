@@ -109,3 +109,16 @@ jobs:
         with:
           push: true
           tags: dev0ps6/bankapp:latest
+
+  deploy:
+   runs-on: self-hosted
+   needs: docker_build_and_push
+   steps:
+     - name: Pull latest image
+       run: docker pull dev0ps6/bankapp:latest
+
+     - name: Stop old container
+       run: docker stop bankapp || true && docker rm bankapp || true
+
+     - name: Run new container
+       run: docker run -d -p 8080:8080 --name bankapp dev0ps6/bankapp:latest
